@@ -6,7 +6,7 @@ from subprocess import CalledProcessError
 
 from . import NO_SOX
 
-SOXI_ARGS = ['b', 'c', 'a', 'D', 'e', 't', 's', 'r']
+
 
 ENCODING_VALS = [
     'signed-integer', 'unsigned-integer', 'floating-point', 'a-law', 'u-law',
@@ -86,9 +86,9 @@ def _get_valid_formats():
 
 
 VALID_FORMATS = _get_valid_formats()
+SOXI_ARGS = ['b', 'c', 'a', 'D', 'e', 't', 's', 'r']
 
-
-def soxi(filepath, argument):
+def soxi(filepath, argument=None):
     ''' Base call to SoXI.
 
     Parameters
@@ -104,12 +104,13 @@ def soxi(filepath, argument):
     shell_output : str
         Command line output of SoXI
     '''
-
-    if argument not in SOXI_ARGS:
-        raise ValueError("Invalid argument '{}' to SoXI".format(argument))
+    #
+    # if not argument :
+    #     raise ValueError("Invalid argument '{}' to SoXI".format(argument))
 
     args = ['sox', '--i']
-    args.append("-{}".format(argument))
+    if argument is not None:
+        args.append("{}".format(argument))
     args.append(filepath)
 
     try:
